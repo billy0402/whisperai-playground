@@ -1,0 +1,86 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry]
+name = "python-template"
+version = "0.1.0"
+description = "My Python template."
+authors = ["Billy Huang <10646003@ntub.edu.tw>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[tool.poetry.group.lint.dependencies]
+ruff = "0.7.0"
+# Use same version with VSCode Pylance: https://github.com/microsoft/pylance-release/blob/main/releases/latest-release.json
+pyright = "1.1.382"
+
+[tool.poetry.group.test.dependencies]
+pytest = "8.3.3"
+
+
+[tool.ruff]
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  # pydocstyle: Do not require any docstring.
+  "D100",
+  "D101",
+  "D102",
+  "D103",
+  "D104",
+  "D105",
+  "D106",
+  "D107",
+  "D212",
+  "D203",
+  # pydocstyle: Allow blank line after docstring.
+  "D202",
+  # flake8-pytest-style: Don't required leading underscore when fixture does not return anything.
+  "PT004",
+  # flake8-annotations: Don't required type annotation for self and cls.
+  "ANN101",
+  "ANN102",
+  # Ignore rules for linter.
+  "COM812",
+  "ISC001",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"**/*test*" = ["S101"] # flake8-bandit: Allow using assert
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.flake8-import-conventions]
+banned-from = ["typing"]
+
+[tool.ruff.lint.flake8-type-checking]
+strict = true
+
+[tool.ruff.lint.isort]
+split-on-trailing-comma = false
+
+[tool.ruff.format]
+skip-magic-trailing-comma = true
+
+
+[tool.pyright]
+pythonVersion = "3.11"
+typeCheckingMode = "strict"
+reportUnnecessaryTypeIgnoreComment = true
+
+
+[tool.pytest.ini_options]
+addopts = "-vv"
+python_files = ["tests.py", "test_*.py", "*_test.py"]
+filterwarnings = ["error", "ignore::DeprecationWarning"]
